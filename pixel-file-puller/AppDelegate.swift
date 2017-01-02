@@ -23,12 +23,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusBar = systemStatusBar.statusItem(withLength: CGFloat(48))
         statusBar.button?.appearsDisabled = false
         statusBar.button?.image = NSImage.init(named: "menu-icon-image")
+        
+        statusBar.button?.action = #selector(launchTransfer)
+        statusBar.button?.target = self
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
-
-
+    
+    func launchTransfer(sender: AnyObject) {
+        showNotification(title: "Transfers Started", message: "Please do not disconnect the phone from the computer.")            
+    }
+    
+    private func showNotification(title: String, message: String) -> Void {
+        let notification = NSUserNotification()
+        notification.title = title
+        notification.informativeText = message
+        notification.soundName = NSUserNotificationDefaultSoundName
+        
+        let notificationCenter = NSUserNotificationCenter.default
+        notificationCenter.deliver(notification)
+    }
 }
 
