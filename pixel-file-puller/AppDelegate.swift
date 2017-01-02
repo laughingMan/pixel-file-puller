@@ -14,6 +14,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var window: NSWindow!
     
     var statusBar: NSStatusItem!
+    let NO_DEVICES_FOUND: String = "List of devices attached\n\n"
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -33,7 +34,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func launchTransfer(sender: AnyObject) {
-        showNotification(title: "Transfers Started", message: "Please do not disconnect the phone from the computer.")            
+        showNotification(title: "Transfers Started", message: "Please do not disconnect the phone from the computer.")
+        
+        if (isDeviceConnected()) {
+
+        } else {
+            print("no device found")
+            showNotification(title: "No Android Device Found", message: "Check that your Android device is connected to the computer.")
+        }
+    }
+    
+    private func isDeviceConnected() -> Bool {
+        let checkForDeviceOutput = shell(launchPath: "/usr/local/bin/adb", arguments: ["devices"])
+        return checkForDeviceOutput.0 != NO_DEVICES_FOUND
     }
     
     private func showNotification(title: String, message: String) -> Void {
@@ -44,6 +57,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let notificationCenter = NSUserNotificationCenter.default
         notificationCenter.deliver(notification)
+    }
+    
+    private func shell(launchPath: String, arguments: [String] = []) -> (String? , Int32) {
+        let task = Process()
+        task.launchPath = launchPath
+        task.arguments = arguments
+        
+        // output sdout realtime
+        let pipe = Pipe()
+        task.standardOutput = pipe
+        task.standardError = pipe
+        
+        task.launch()
+        
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        let output = String(data: data, encoding: .utf8)
+        task.waitUntilExit()
+        
+        return (output, task.terminationStatus)
     }
 }
 
