@@ -393,6 +393,7 @@
 				6A0EB2411E185E5F00A09496 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6A0EB2421E185E5F00A09496 /* Build configuration list for PBXNativeTarget "pixel-file-pullerTests" */ = {
 			isa = XCConfigurationList;
@@ -401,6 +402,7 @@
 				6A0EB2441E185E5F00A09496 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

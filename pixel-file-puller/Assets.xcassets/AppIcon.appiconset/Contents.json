@@ -41,14 +41,15 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "mac",
       "size" : "512x512",
+      "idiom" : "mac",
+      "filename" : "documented-jounrney.png",
       "scale" : "1x"
     },
     {
       "size" : "512x512",
       "idiom" : "mac",
-      "filename" : "movie-icon@2x.png",
+      "filename" : "documented-jounrney@2x.png",
       "scale" : "2x"
     }
   ],
